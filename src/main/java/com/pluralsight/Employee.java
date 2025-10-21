@@ -1,50 +1,43 @@
 package com.pluralsight;
 
 public class Employee {
-    private int employeeId;
     private String name;
-    private String department;
-    private double payRate; // hourly
     private double hoursWorked;
+    private Double lastPunchTime = null; // null means currently punched out
 
-    public Employee(int employeeId, String name, String department, double payRate, double hoursWorked) {
-        this.employeeId = employeeId;
+    public Employee(String name) {
         this.name = name;
-        this.department = department;
-        this.payRate = payRate;
-        this.hoursWorked = hoursWorked;
-    }
-
-    public int getEmployeeId() {
-        return employeeId;
+        this.hoursWorked = 0;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public double getPayRate() {
-        return payRate;
-    }
-
     public double getHoursWorked() {
         return hoursWorked;
     }
 
-    // Derived getters
-    public double getRegularHours() {
-        return Math.min(hoursWorked, 40);
-    }
-
-    public double getOvertimeHours() {
-        return hoursWorked > 40 ? hoursWorked - 40 : 0;
-    }
-
-    public double getTotalPay() {
-        return (getRegularHours() * payRate) + (getOvertimeHours() * payRate * 1.5);
+    /**
+     * Single method to handle punch in/out.
+     * If currently punched out, records punch in time.
+     * If currently punched in, calculates session hours and adds to total hours.
+     */
+    public void punchTimeCard(double time) {
+        if (lastPunchTime == null) {
+            // Punching in
+            lastPunchTime = time;
+            System.out.println(name + " punched in at " + time);
+        } else {
+            // Punching out
+            double sessionHours = time - lastPunchTime;
+            if (sessionHours < 0) {
+                System.out.println("Error: Punch out time cannot be earlier than punch in time.");
+                return;
+            }
+            hoursWorked += sessionHours;
+            System.out.println(name + " punched out at " + time + ". Hours worked this session: " + sessionHours);
+            lastPunchTime = null; // Reset for next punch
+        }
     }
 }

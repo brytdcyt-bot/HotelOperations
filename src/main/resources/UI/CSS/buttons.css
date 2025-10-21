@@ -1,0 +1,26 @@
+button {
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: white;
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.nav-btn {
+    margin: 0 0.3rem;
+}
+
+.nav-btn.active {
+    background: var(--accent-color);
+}

@@ -1,0 +1,194 @@
+/* ==============================
+   Global Styles
+============================== */
+@import url('variables.css');
+
+body {
+    font-family: var(--font-family);
+    background: var(--background-gradient);
+    color: var(--text-color);
+}
+
+header {
+    text-align: center;
+    margin: 2rem 0 1rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #004aad;
+}
+
+header p {
+    margin-top: 0.3rem;
+    color: #444;
+}
+
+main {
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-top: 0;
+    color: #003d8d;
+}
+
+/* ==============================
+   Forms
+============================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input, select, button {
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.4rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+button {
+    background: var(--primary-color);
+    transition: background var(--transition-fast);
+}
+button:hover {
+    background: var(--primary-hover);
+}
+
+p {
+    font-weight: bold;
+    color: #222;
+    margin-top: 0.75rem;
+}
+
+/* ==============================
+   Footer
+============================== */
+footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* ==============================
+   Toast Notifications
+============================== */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-light);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-fast);
+    z-index: 1000;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.info { background: var(--primary-color); }
+.toast.success { background: #2e8b57; }
+.toast.error { background: #cc0000; }
+
+/* Card animation */
+.card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-slow);
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.highlight {
+    box-shadow: 0 0 15px var(--accent-color);
+}
+
+/* ==============================
+   Home Page Styles
+============================== */
+
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--background-gradient);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-light);
+    margin-bottom: 3rem;
+}
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.dashboard-summary .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.dashboard-summary .card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-light);
+    text-align: center;
+}
+
+.quick-links {
+    margin-top: 3rem;
+}
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.tile {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: var(--shadow-light);
+    transition: all var(--transition-fast);
+}
+.tile:hover {
+    background: var(--accent-color);
+    color: #fff;
+    transform: translateY(-3px);
+}

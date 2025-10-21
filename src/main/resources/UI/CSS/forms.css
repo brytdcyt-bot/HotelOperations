@@ -1,0 +1,23 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+input, select {
+    border: 1px solid #ccc;
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.6rem;
+    font-size: var(--font-size-base);
+    width: 55%;
+}
+
+input:focus, select:focus {
+    outline: 2px solid var(--accent-color);
+}
