@@ -1,76 +1,29 @@
 package com.pluralsight;
 
 public class Reservations {
-    private String roomType; // "king" or "double"
+    private Room room;
     private int numberOfNights;
-    private boolean isWeekend;
-    private double pricePerNight;
+    private boolean weekend;
 
-    public Reservations(String roomType, int numberOfNights, boolean isWeekend) {
-        setRoomType(roomType); // sets price based on type
+    public Reservations(Room room, int numberOfNights, boolean weekend) {
+        this.room = room;
         this.numberOfNights = numberOfNights;
-        this.isWeekend = isWeekend;
+        this.weekend = weekend;
     }
 
-    public String getRoomType() {
-        return roomType;
-    }
+    public Room getRoom() { return room; }
+    public int getNumberOfNights() { return numberOfNights; }
+    public boolean isWeekend() { return weekend; }
 
-    public void setRoomType(String roomType) {
-        if (roomType == null) {
-            throw new IllegalArgumentException("Room type cannot be null.");
-        }
-
-        String type = roomType.toLowerCase();
-
-        switch (type) {
-            case "king":
-                this.roomType = "king";
-                pricePerNight = 139.00;
-                break;
-            case "double":
-                this.roomType = "double";
-                pricePerNight = 124.00;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid room type. Must be 'king' or 'double'.");
+    public double getPricePerNight() {
+        switch (room.getType()) {
+            case "king": return weekend ? 139.0 * 1.1 : 139.0;
+            case "double": return weekend ? 124.0 * 1.1 : 124.0;
+            default: return 0.0;
         }
     }
 
-    public int getNumberOfNights() {
-        return numberOfNights;
-    }
-
-    public void setNumberOfNights(int numberOfNights) {
-        if (numberOfNights <= 0) {
-            throw new IllegalArgumentException("Number of nights must be positive.");
-        }
-        this.numberOfNights = numberOfNights;
-    }
-
-    public boolean isWeekend() {
-        return isWeekend;
-    }
-
-    public void setWeekend(boolean isWeekend) {
-        this.isWeekend = isWeekend;
-    }
-
-    /**
-     * Returns the price per night, including weekend adjustment.
-     */
-    public double getPrice() {
-        double finalPrice = pricePerNight;
-        if (isWeekend) {
-            finalPrice *= 1.10; // 10% increase for weekend
-        }
-        return finalPrice;
-    }
-
-    /**
-     * Returns the total reservation cost for all nights.
-     */
     public double getReservationTotal() {
-        return getPrice() * numberOfNights;
+        return getPricePerNight() * numberOfNights;
     }
 }

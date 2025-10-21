@@ -2,42 +2,33 @@ package com.pluralsight;
 
 public class Employee {
     private String name;
+    private String role;
     private double hoursWorked;
-    private Double lastPunchTime = null; // null means currently punched out
+    private Double lastPunchTime = null;
 
-    public Employee(String name) {
+    public Employee(String name, String role) {
         this.name = name;
+        this.role = role;
         this.hoursWorked = 0;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
+    public String getRole() { return role; }
+    public double getHoursWorked() { return hoursWorked; }
 
-    public double getHoursWorked() {
-        return hoursWorked;
-    }
-
-    /**
-     * Single method to handle punch in/out.
-     * If currently punched out, records punch in time.
-     * If currently punched in, calculates session hours and adds to total hours.
-     */
     public void punchTimeCard(double time) {
         if (lastPunchTime == null) {
-            // Punching in
             lastPunchTime = time;
             System.out.println(name + " punched in at " + time);
         } else {
-            // Punching out
-            double sessionHours = time - lastPunchTime;
-            if (sessionHours < 0) {
-                System.out.println("Error: Punch out time cannot be earlier than punch in time.");
+            double session = time - lastPunchTime;
+            if (session < 0) {
+                System.out.println("Error: Invalid punch out time.");
                 return;
             }
-            hoursWorked += sessionHours;
-            System.out.println(name + " punched out at " + time + ". Hours worked this session: " + sessionHours);
-            lastPunchTime = null; // Reset for next punch
+            hoursWorked += session;
+            System.out.println(name + " punched out at " + time + ". Hours worked this session: " + session);
+            lastPunchTime = null;
         }
     }
 }
