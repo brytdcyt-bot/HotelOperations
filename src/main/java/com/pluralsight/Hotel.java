@@ -5,29 +5,59 @@ import java.util.List;
 
 public class Hotel {
     private String name;
-    private List<Room> rooms;
-    private List<Employee> employees;
+    private int numberOfSuites;
+    private int numberOfRooms;
+    private int bookedSuites;
+    private int bookedBasicRooms;
 
-    public Hotel(String name) {
+    // Constructor with default booked rooms
+    public Hotel(String name, int numberOfSuites, int numberOfRooms) {
         this.name = name;
-        rooms = new ArrayList<>();
-        employees = new ArrayList<>();
+        this.numberOfSuites = numberOfSuites;
+        this.numberOfRooms = numberOfRooms;
+        this.bookedSuites = 0;
+        this.bookedBasicRooms = 0;
     }
 
-    public void addRoom(Room room) { rooms.add(room); }
-    public void addEmployee(Employee employee) { employees.add(employee); }
+    // Constructor with specified booked rooms
+    public Hotel(String name, int numberOfSuites, int numberOfRooms, int bookedSuites, int bookedBasicRooms) {
+        this.name = name;
+        this.numberOfSuites = numberOfSuites;
+        this.numberOfRooms = numberOfRooms;
+        this.bookedSuites = bookedSuites;
+        this.bookedBasicRooms = bookedBasicRooms;
+    }
 
-    public void listRooms() {
-        System.out.println("\nHotel Rooms:");
-        for (Room room : rooms) {
-            System.out.println("Room " + room.getRoomNumber() + " (" + room.getType() + ") - Occupied: " + room.isOccupied() + ", Dirty: " + room.isDirty());
+    // Book rooms
+    public boolean bookRoom(int numberOfRooms, boolean isSuite) {
+        if (isSuite) {
+            if (getAvailableSuites() >= numberOfRooms) {
+                bookedSuites += numberOfRooms;
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (getAvailableRooms() >= numberOfRooms) {
+                bookedBasicRooms += numberOfRooms;
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
-    public void listEmployees() {
-        System.out.println("\nHotel Employees:");
-        for (Employee e : employees) {
-            System.out.println(e.getName() + " (" + e.getRole() + ") - Hours worked: " + e.getHoursWorked());
-        }
+    // Derived getters
+    public int getAvailableSuites() {
+        return numberOfSuites - bookedSuites;
     }
+
+    public int getAvailableRooms() {
+        return numberOfRooms - bookedBasicRooms;
+    }
+
+    // Optional getters
+    public String getName() { return name; }
+    public int getBookedSuites() { return bookedSuites; }
+    public int getBookedBasicRooms() { return bookedBasicRooms; }
 }

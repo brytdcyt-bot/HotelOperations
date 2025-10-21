@@ -1,37 +1,56 @@
 package com.pluralsight;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        // Create hotel
-        Hotel hotel = new Hotel("Pluralsight Inn");
+        Reservations hotel = new Reservations(3, 5); // 3 suites, 5 basic rooms
+        Scanner scanner = new Scanner(System.in);
 
-        // Add rooms
-        Room r1 = new Room(101, "king");
-        Room r2 = new Room(102, "double");
-        hotel.addRoom(r1);
-        hotel.addRoom(r2);
+        System.out.println("Welcome to the Hotel Reservation System!");
 
-        // Add employees
-        Employee e1 = new Employee("John Doe", "Housekeeping");
-        Employee e2 = new Employee("Jane Smith", "Front Desk");
-        hotel.addEmployee(e1);
-        hotel.addEmployee(e2);
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. View all rooms");
+            System.out.println("2. Book a room");
+            System.out.println("3. Check available rooms");
+            System.out.println("4. Exit");
+            System.out.print("Select an option: ");
 
-        // Room test
-        r1.checkIn();
-        r1.checkOut();
-        r1.cleanRoom();
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
 
-        // Reservation test
-        Reservations res1 = new Reservations(r1, 3, true);
-        System.out.println("\nReservation Total: $" + res1.getReservationTotal());
+            switch (choice) {
+                case 1:
+                    hotel.printRooms();
+                    break;
+                case 2:
+                    System.out.print("Enter room type (Suite/Basic): ");
+                    String type = scanner.nextLine();
+                    System.out.print("How many rooms to book? ");
+                    int count = scanner.nextInt();
+                    scanner.nextLine(); // consume newline
 
-        // Employee test
-        e1.punchTimeCard(9.0);
-        e1.punchTimeCard(17.0);
-
-        // List hotel status
-        hotel.listRooms();
-        hotel.listEmployees();
+                    boolean success = hotel.bookRooms(count, type);
+                    if (success) {
+                        System.out.println(count + " " + type + " room(s) successfully booked!");
+                    } else {
+                        System.out.println("Not enough available " + type + " rooms.");
+                    }
+                    break;
+                case 3:
+                    System.out.print("Enter room type (Suite/Basic): ");
+                    String checkType = scanner.nextLine();
+                    int available = hotel.getAvailable(checkType);
+                    System.out.println("Available " + checkType + " rooms: " + available);
+                    break;
+                case 4:
+                    System.out.println("Goodbye!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
     }
 }

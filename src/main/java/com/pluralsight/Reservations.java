@@ -1,29 +1,51 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Reservations {
-    private Room room;
-    private int numberOfNights;
-    private boolean weekend;
+    private List<Room> rooms;
 
-    public Reservations(Room room, int numberOfNights, boolean weekend) {
-        this.room = room;
-        this.numberOfNights = numberOfNights;
-        this.weekend = weekend;
-    }
+    public Reservations(int numSuites, int numBasicRooms) {
+        rooms = new ArrayList<>();
 
-    public Room getRoom() { return room; }
-    public int getNumberOfNights() { return numberOfNights; }
-    public boolean isWeekend() { return weekend; }
-
-    public double getPricePerNight() {
-        switch (room.getType()) {
-            case "king": return weekend ? 139.0 * 1.1 : 139.0;
-            case "double": return weekend ? 124.0 * 1.1 : 124.0;
-            default: return 0.0;
+        int roomNumber = 1;
+        for (int i = 0; i < numSuites; i++) {
+            rooms.add(new Room(roomNumber++, "Suite"));
+        }
+        for (int i = 0; i < numBasicRooms; i++) {
+            rooms.add(new Room(roomNumber++, "Basic"));
         }
     }
 
-    public double getReservationTotal() {
-        return getPricePerNight() * numberOfNights;
+    // Book rooms
+    public boolean bookRooms(int count, String type) {
+        int bookedCount = 0;
+        for (Room room : rooms) {
+            if (room.getType().equalsIgnoreCase(type) && room.isAvailable()) {
+                room.book();
+                bookedCount++;
+                if (bookedCount == count) return true;
+            }
+        }
+        return false; // not enough rooms available
+    }
+
+    // Get available rooms of a type
+    public int getAvailable(String type) {
+        int count = 0;
+        for (Room room : rooms) {
+            if (room.getType().equalsIgnoreCase(type) && room.isAvailable()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // Print all rooms
+    public void printRooms() {
+        for (Room room : rooms) {
+            System.out.println(room);
+        }
     }
 }
